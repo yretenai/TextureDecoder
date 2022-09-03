@@ -21,7 +21,7 @@
 		<PackageProjectUrl>https://github.com/AssetRipper/TextureDecoder</PackageProjectUrl>
 		<Copyright>Copyright (c) 2022 ds5678</Copyright>
 		<Description>Managed library for decoding textures in multiple formats.</Description>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<DocumentationFile>bin\TextureDecoder.xml</DocumentationFile>

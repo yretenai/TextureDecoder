@@ -171,7 +171,7 @@ internal static class Program
 		WriteProperty(writer, hasAlpha, typeName, 'A', MaximumValues[type]);
 		writer.WriteLine();
 
-		WriteGetChannels(writer, typeName);
+		WriteGetChannels(writer, typeName, hasRed, hasGreen, hasBlue, hasAlpha);
 		writer.WriteLine();
 		WriteSetChannels(writer, typeName);
 
@@ -182,12 +182,23 @@ internal static class Program
 		writer.WriteLine('}');
 	}
 
-	private static void WriteGetChannels(IndentedTextWriter writer, string typeName)
+	private static void WriteGetChannels(IndentedTextWriter writer, string typeName, bool hasRed, bool hasGreen, bool hasBlue, bool hasAlpha)
 	{
 		writer.WriteLine($"public void GetChannels(out {typeName} r, out {typeName} g, out {typeName} b, out {typeName} a)");
 		writer.WriteLine('{');
 		writer.Indent++;
 		writer.WriteLine("DefaultColorMethods.GetChannels(this, out r, out g, out b, out a);");
+        if (hasRed && !hasGreen && !hasBlue && !hasAlpha) { // when only red is present, map it to the other channels
+            writer.WriteLine("g = b = r;");
+        }
+
+        if (hasGreen && !hasRed && !hasBlue && !hasAlpha) { // when only green is present, map it to the other channels
+            writer.WriteLine("r = b = g;");
+        }
+
+        if (hasBlue && !hasRed && !hasGreen && !hasAlpha) { // when only blue is present, map it to the other channels
+            writer.WriteLine("r = g = b;");
+        }
 		writer.Indent--;
 		writer.WriteLine('}');
 	}

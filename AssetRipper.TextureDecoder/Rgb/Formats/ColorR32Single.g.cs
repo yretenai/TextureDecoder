@@ -30,6 +30,7 @@ namespace AssetRipper.TextureDecoder.Rgb.Formats
 		public void GetChannels(out float r, out float g, out float b, out float a)
 		{
 			DefaultColorMethods.GetChannels(this, out r, out g, out b, out a);
+			g = b = r;
 		}
 		
 		public void SetChannels(float r, float g, float b, float a)

@@ -4,6 +4,7 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<LangVersion>Latest</LangVersion>
 		<Nullable>enable</Nullable>
+        <TieredPGO>true</TieredPGO>
 		<ImplicitUsings>disable</ImplicitUsings>
 		<IsTrimmable>true</IsTrimmable>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>

@@ -6,7 +6,7 @@ internal static class Program
 {
 	private const string AttributeNamespace = "AssetRipper.TextureDecoder.Attributes";
 	private const string OutputNamespace = "AssetRipper.TextureDecoder.Rgb.Formats";
-	private const string OutputFolder = "../../../../AssetRipper.TextureDecoder/Rgb/Formats/";
+	private const string OutputFolder = "../AssetRipper.TextureDecoder/Rgb/Formats/";
 
 	private static readonly Dictionary<Type, string> MinimumValues = new()
 	{

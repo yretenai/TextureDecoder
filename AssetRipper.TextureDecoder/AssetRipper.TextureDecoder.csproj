@@ -26,7 +26,7 @@
 
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<DocumentationFile>bin\TextureDecoder.xml</DocumentationFile> -->
-		<NoWarn>1591</NoWarn>
+		<NoWarn>1591;CA1815;CA1823</NoWarn>
 	</PropertyGroup>
 
 </Project>

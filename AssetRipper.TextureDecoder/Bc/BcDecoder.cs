@@ -81,7 +81,9 @@ namespace AssetRipper.TextureDecoder.Bc
 		public static int DecompressBC4(ReadOnlySpan<byte> input, int width, int height, Span<byte> output)
 		{
 			int inputOffset = 0;
-			Span<byte> buffer = new byte[width * height * Unsafe.SizeOf<ColorR8>()];
+			var bufferSize = width * height * Unsafe.SizeOf<ColorR8>();
+            byte[] bufferArray = ArrayPool<byte>.Shared.Rent(bufferSize);
+            Span<byte> buffer = new Span<byte>(bufferArray, 0, bufferSize);
 			for (int i = 0; i < height; i += 4)
 			{
 				for (int j = 0; j < width; j += 4)
@@ -92,6 +94,7 @@ namespace AssetRipper.TextureDecoder.Bc
 				}
 			}
 			RgbConverter.Convert<ColorR8, byte, ColorBGRA32, byte>(buffer, width, height, output);
+            ArrayPool<byte>.Shared.Return(bufferArray);
 			return inputOffset;
 		}
 
@@ -104,7 +107,9 @@ namespace AssetRipper.TextureDecoder.Bc
 		public static int DecompressBC5(ReadOnlySpan<byte> input, int width, int height, Span<byte> output)
 		{
 			int inputOffset = 0;
-			Span<byte> buffer = new byte[width * height * Unsafe.SizeOf<ColorRG16>()];
+			var bufferSize = width * height * Unsafe.SizeOf<ColorRG16>();
+            byte[] bufferArray = ArrayPool<byte>.Shared.Rent(bufferSize);
+            Span<byte> buffer = new Span<byte>(bufferArray, 0, bufferSize);
 			for (int i = 0; i < height; i += 4)
 			{
 				for (int j = 0; j < width; j += 4)
@@ -115,7 +120,8 @@ namespace AssetRipper.TextureDecoder.Bc
 				}
 			}
 			RgbConverter.Convert<ColorRG16, byte, ColorBGRA32, byte>(buffer, width, height, output);
-			return inputOffset;
+            ArrayPool<byte>.Shared.Return(bufferArray);
+            return inputOffset;
 		}
 
 		public static int DecompressBC6H(ReadOnlySpan<byte> input, int width, int height, bool isSigned, out byte[] output)

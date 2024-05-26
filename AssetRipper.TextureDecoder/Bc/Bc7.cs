@@ -28,6 +28,7 @@ public static class Bc7
 		return Decompress(input, width, height, output);
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveOptimization)]
 	public static int Decompress(ReadOnlySpan<byte> input, int width, int height, Span<byte> output)
 	{
 		int inputOffset = 0;

@@ -17,6 +17,7 @@ public static class Bc5
 		return Decompress(input, width, height, output);
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveOptimization)]
 	public static int Decompress(ReadOnlySpan<byte> input, int width, int height, Span<byte> output)
 	{
 		int bufferSize = width * height * Unsafe.SizeOf<ColorRG<byte>>();

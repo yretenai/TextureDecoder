@@ -4,34 +4,40 @@ namespace AssetRipper.TextureDecoder.Bc;
 
 public static class BcHelpers
 {
+	[MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
 	public static void DecompressBc1(ReadOnlySpan<byte> compressedBlock, Span<byte> decompressedBlock, int destinationPitch)
 	{
 		ColorBlock(compressedBlock, decompressedBlock, destinationPitch, 0);
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
 	public static void DecompressBc2(ReadOnlySpan<byte> compressedBlock, Span<byte> decompressedBlock, int destinationPitch)
 	{
 		ColorBlock(compressedBlock.Slice(8), decompressedBlock, destinationPitch, 1);
 		SharpAlphaBlock(compressedBlock, decompressedBlock.Slice(3), destinationPitch);
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
 	public static void DecompressBc3(ReadOnlySpan<byte> compressedBlock, Span<byte> decompressedBlock, int destinationPitch)
 	{
 		ColorBlock(compressedBlock.Slice(8), decompressedBlock, destinationPitch, 1);
 		SmoothAlphaBlock(compressedBlock, decompressedBlock.Slice(3), destinationPitch, 4);
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
 	public static void DecompressBc4(ReadOnlySpan<byte> compressedBlock, Span<byte> decompressedBlock, int destinationPitch)
 	{
 		SmoothAlphaBlock(compressedBlock, decompressedBlock, destinationPitch, 1);
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
 	public static void DecompressBc5(ReadOnlySpan<byte> compressedBlock, Span<byte> decompressedBlock, int destinationPitch)
 	{
 		SmoothAlphaBlock(compressedBlock, decompressedBlock, destinationPitch, 2);
 		SmoothAlphaBlock(compressedBlock.Slice(8), decompressedBlock.Slice(1), destinationPitch, 2);
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveOptimization)]
 	public static void DecompressBc6h(ReadOnlySpan<byte> compressedBlock, Span<byte> decompressedBlock, int destinationPitch, bool isSigned)
 	{
 		BitStream bstream = new()
@@ -557,6 +563,7 @@ public static class BcHelpers
 		}
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveOptimization)]
 	public static void DecompressBc7(ReadOnlySpan<byte> compressedBlock, Span<byte> decompressedBlock, int destinationPitch)
 	{
 		BitStream bstream = new()
@@ -820,7 +827,7 @@ public static class BcHelpers
 		}
 	}
 
-
+	[MethodImpl(MethodImplOptions.AggressiveOptimization)]
 	public static void ColorBlock(ReadOnlySpan<byte> compressedBlock, Span<byte> decompressedBlock, int destinationPitch, int onlyOpaqueMode)
 	{
 		Span<uint> refColors = stackalloc uint[4]; // 0xAABBGGRR
@@ -890,6 +897,7 @@ public static class BcHelpers
 		}
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveOptimization)]
 	public static void SharpAlphaBlock(ReadOnlySpan<byte> compressedBlock, Span<byte> decompressedBlock, int destinationPitch)
 	{
 		for (int i = 0; i < 4; ++i)
@@ -902,6 +910,7 @@ public static class BcHelpers
 		}
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveOptimization)]
 	public static void SmoothAlphaBlock(ReadOnlySpan<byte> compressedBlock, Span<byte> decompressedBlock, int destinationPitch, int pixelSize)
 	{
 		Span<byte> alpha = stackalloc byte[8];
@@ -943,12 +952,14 @@ public static class BcHelpers
 		}
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
 	// http://graphics.stanford.edu/~seander/bithacks.html#VariableSignExtend 
 	public static int ExtendSign(int val, int bits)
 	{
 		return (val << (32 - bits)) >> (32 - bits);
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
 	public static int TransformInverse(int val, int a0, int bits, bool isSigned)
 	{
 		// If the precision of A0 is "p" bits, then the transform algorithm is:
@@ -968,6 +979,7 @@ public static class BcHelpers
 	/// <param name="bits"></param>
 	/// <param name="isSigned"></param>
 	/// <returns></returns>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static int Unquantize(int val, int bits, bool isSigned)
 	{
 		int unq;
@@ -1028,11 +1040,13 @@ public static class BcHelpers
 		return unq;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
 	public static int Interpolate(int a, int b, ReadOnlySpan<int> weights, int index)
 	{
 		return ((a * (64 - weights[index])) + (b * weights[index]) + 32) >> 6;
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static ushort FinishUnquantize(int val, bool isSigned)
 	{
 		if (!isSigned)
@@ -1052,6 +1066,7 @@ public static class BcHelpers
 		}
 	}
 
+	[MethodImpl(MethodImplOptions.AggressiveOptimization | MethodImplOptions.AggressiveInlining)]
 	public static void SwapValues(ref int a, ref int b)
 	{
 		(a, b) = (b, a);

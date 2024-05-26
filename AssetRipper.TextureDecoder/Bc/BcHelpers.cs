@@ -2,7 +2,7 @@
 
 namespace AssetRipper.TextureDecoder.Bc;
 
-internal static class BcHelpers
+public static class BcHelpers
 {
 	public static void DecompressBc1(ReadOnlySpan<byte> compressedBlock, Span<byte> decompressedBlock, int destinationPitch)
 	{

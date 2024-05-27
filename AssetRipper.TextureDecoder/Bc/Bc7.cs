@@ -44,7 +44,6 @@ public static class Bc7
 				inputOffset += BlockSize;
 			}
 		}
-		RgbConverter.Convert<ColorRGBA<byte>, byte, ColorBGRA32, byte>(output, width, height, output);
 		return inputOffset;
 	}
 

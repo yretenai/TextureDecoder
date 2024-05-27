@@ -36,7 +36,7 @@ public static class Bc6h
 				inputOffset += BlockSize;
 			}
 		}
-		RgbConverter.Convert<ColorRGB<Half>, Half, ColorBGRA32, byte>(buffer, width, height, output);
+		RgbConverter.Convert<ColorRGB<Half>, Half, ColorRGBA<byte>, byte>(buffer, width, height, output);
 		ArrayPool<byte>.Shared.Return(bufferArray);
 		return inputOffset;
 	}
